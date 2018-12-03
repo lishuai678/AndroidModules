@@ -59,6 +59,82 @@
 //}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
+//
+//package com.example.myapplication.MvpDemo;
+//
+//import android.os.Bundle;
+//import android.support.annotation.Nullable;
+//import android.support.v7.app.AppCompatActivity;
+//import android.util.Log;
+//import android.view.View;
+//import android.widget.Button;
+//
+//import com.example.myapplication.MvpDemo.MvpDemo2.MvpPresenter2;
+//import com.example.myapplication.MvpDemo.MvpDemo2.MvpRcyVView2;
+//import com.example.myapplication.R;
+//import com.google.gson.Gson;
+//
+///**
+// * 第四步:对应demo2
+// * 上面的问题：
+// * 1.Presenter中attach和detach每个Presenter都需要定义这个方法
+// * 解决问题：
+// * 抽象出basePresenter
+// * 但是如果抽象出BasePresenter，那么attach方法中的view就不能写死，那么就需要泛型设计
+// */
+//
+//public class MyRecyclerViewActivity extends AppCompatActivity implements MvpRcyVView2 {
+//    private MvpPresenter2 mvpPresenter2;
+//    private Button button;
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_layout_demo);
+//
+//        mvpPresenter2  = new MvpPresenter2();
+//        mvpPresenter2.attach(this);
+//        initView();
+//
+//    }
+//
+//    private void initView() {
+//        button = findViewById(R.id.demo_button);
+//        button.setText("开始请求");
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                initData();
+//            }
+//        });
+//    }
+//
+//    private void initData() {
+//        mvpPresenter2.getDatas();
+//    }
+//
+//    @Override
+//    public void requestSuccess(com.example.myapplication.MvpDemo.MvpDemo2.request.WeatherBean data) {
+//        String str = new Gson().toJson(data);
+//        Log.i("ls","data----"+str);
+//        button.setText(str);
+//    }
+//
+//    @Override
+//    public void requestFailure(String error) {
+//        Log.i("ls","error----"+error);
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mvpPresenter2.detach(this);
+//        mvpPresenter2.interruptHttp();
+//    }
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+
 
 package com.example.myapplication.MvpDemo;
 
@@ -75,7 +151,7 @@ import com.example.myapplication.R;
 import com.google.gson.Gson;
 
 /**
- * 第四步:对应demo2
+ * 第5步:对应demo2
  * 上面的问题：
  * 1.Presenter中attach和detach每个Presenter都需要定义这个方法
  * 解决问题：
