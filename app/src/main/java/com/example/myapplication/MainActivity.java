@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.myapplication.RecyView.MyRecyclerViewActivity;
+import com.example.myapplication.MvpDemo.MyRecyclerViewActivity;
 
 public class MainActivity extends AppCompatActivity {
     private Button gongxiang;
