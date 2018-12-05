@@ -140,37 +140,38 @@ package com.example.myapplication.MvpDemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.MvpDemo.MvpDemo2.MvpPresenter2;
-import com.example.myapplication.MvpDemo.MvpDemo2.MvpRcyVView2;
+import com.example.myapplication.MvpDemo.MvpDemo3.MvpPresenter3;
+import com.example.myapplication.MvpDemo.MvpDemo3.MvpRecyVView3;
+import com.example.myapplication.MvpDemo.MvpDemo3.base.AbstractBaseActivity;
 import com.example.myapplication.R;
 import com.google.gson.Gson;
 
 /**
- * 第5步:对应demo2
+ * 第五步:对应demo3
  * 上面的问题：
- * 1.Presenter中attach和detach每个Presenter都需要定义这个方法
+ * 1.每个Activity都需要调用attach和detach两个方法，
  * 解决问题：
- * 抽象出basePresenter
- * 但是如果抽象出BasePresenter，那么attach方法中的view就不能写死，那么就需要泛型设计
+ * 我们可以将他们抽到基类中
  */
 
-public class MyRecyclerViewActivity extends AppCompatActivity implements MvpRcyVView2 {
-    private MvpPresenter2 mvpPresenter2;
+public class MyRecyclerViewActivity extends AbstractBaseActivity<MvpRecyVView3,MvpPresenter3> implements MvpRecyVView3 {
     private Button button;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_demo);
-
-        mvpPresenter2  = new MvpPresenter2();
-        mvpPresenter2.attach(this);
         initView();
+    }
 
+    @Override
+    protected MvpPresenter3 creatPresenter() {
+        return new MvpPresenter3();
     }
 
     private void initView() {
@@ -185,7 +186,12 @@ public class MyRecyclerViewActivity extends AppCompatActivity implements MvpRcyV
     }
 
     private void initData() {
-        mvpPresenter2.getDatas();
+        getPresenter().getDatas("101010100");
+    }
+
+    @Override
+    public void requestLoading() {
+        button.setText("请求中,请稍后...");
     }
 
     @Override
@@ -200,11 +206,5 @@ public class MyRecyclerViewActivity extends AppCompatActivity implements MvpRcyV
         Log.i("ls","error----"+error);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mvpPresenter2.detach(this);
-        mvpPresenter2.interruptHttp();
-    }
 }
 

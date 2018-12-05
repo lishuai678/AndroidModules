@@ -1,10 +1,8 @@
 package com.example.myapplication.MvpDemo.MvpDemo2;
 
 import android.util.Log;
-
 import com.example.myapplication.MvpDemo.MvpDemo2.base.AbstractMvpPersenter2;
 import com.example.myapplication.MvpDemo.MvpDemo2.request.WeatherBean;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

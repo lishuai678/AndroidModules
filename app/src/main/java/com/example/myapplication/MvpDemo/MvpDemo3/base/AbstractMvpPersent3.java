@@ -4,7 +4,7 @@ package com.example.myapplication.MvpDemo.MvpDemo3.base;
  * Created by admin on 2018/12/3.
  */
 
-public class AbstractMvpPersent3<V extends MvpView3>{
+public abstract class AbstractMvpPersent3<V extends MvpBaseView3>{
     private V mMvpView;
 
     /**
