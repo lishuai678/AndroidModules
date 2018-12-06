@@ -8,3 +8,6 @@ myapplication下MvpDemo包下的demo都是对mvp，练习的
 
 
 如果你不想知道的话，也可以直接下载perfect-mvp的Module直接使用，
+-----------------------project---------------------------------------
+代码框架选型：
+android ：mvp+retrofit+RxAndroid
