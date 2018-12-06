@@ -136,32 +136,123 @@
 
 
 
+//package com.example.myapplication.MvpDemo;
+//
+//import android.os.Bundle;
+//import android.support.annotation.Nullable;
+//import android.util.Log;
+//import android.view.View;
+//import android.widget.Button;
+//
+//import com.example.myapplication.MvpDemo.MvpDemo2.MvpPresenter2;
+//import com.example.myapplication.MvpDemo.MvpDemo3.MvpPresenter3;
+//import com.example.myapplication.MvpDemo.MvpDemo3.MvpRecyVView3;
+//import com.example.myapplication.MvpDemo.MvpDemo3.base.AbstractBaseActivity;
+//import com.example.myapplication.R;
+//import com.google.gson.Gson;
+//
+///**
+// * 第五步:对应demo3
+// * 上面的问题：
+// * 1.每个Activity都需要调用attach和detach两个方法，
+// * 解决问题：
+// * 我们可以将他们抽到基类中
+// */
+//
+//public class MyRecyclerViewActivity extends AbstractBaseActivity<MvpRecyVView3,MvpPresenter3> implements MvpRecyVView3 {
+//    private Button button;
+//
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_layout_demo);
+//        initView();
+//    }
+//
+//    @Override
+//    protected MvpPresenter3 creatPresenter() {
+//        return new MvpPresenter3();
+//    }
+//
+//    private void initView() {
+//        button = findViewById(R.id.demo_button);
+//        button.setText("开始请求");
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                initData();
+//            }
+//        });
+//    }
+//
+//    private void initData() {
+//        getPresenter().getDatas("101010100");
+//    }
+//
+//    @Override
+//    public void requestLoading() {
+//        button.setText("请求中,请稍后...");
+//    }
+//
+//    @Override
+//    public void requestSuccess(com.example.myapplication.MvpDemo.MvpDemo2.request.WeatherBean data) {
+//        String str = new Gson().toJson(data);
+//        Log.i("ls","data----"+str);
+//        button.setText(str);
+//    }
+//
+//    @Override
+//    public void requestFailure(String error) {
+//        Log.i("ls","error----"+error);
+//    }
+//
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 package com.example.myapplication.MvpDemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.myapplication.MvpDemo.MvpDemo2.MvpPresenter2;
-import com.example.myapplication.MvpDemo.MvpDemo3.MvpPresenter3;
-import com.example.myapplication.MvpDemo.MvpDemo3.MvpRecyVView3;
-import com.example.myapplication.MvpDemo.MvpDemo3.base.AbstractBaseActivity;
+import com.example.myapplication.MvpDemo.MvpDemo4.RequestPresenter4;
+import com.example.myapplication.MvpDemo.MvpDemo4.RequestView4;
+import com.example.myapplication.MvpDemo.MvpDemo4.bean.WeatherBean;
+import com.example.myapplication.MvpDemo.MvpDemo4.mvpframework.factory.CreatePresenter;
+import com.example.myapplication.MvpDemo.MvpDemo4.mvpframework.view.AbstractMvpAppCompatActivity;
 import com.example.myapplication.R;
 import com.google.gson.Gson;
 
 /**
- * 第五步:对应demo3
+ * 第六步:对应demo4,终极封装
  * 上面的问题：
- * 1.每个Activity都需要调用attach和detach两个方法，
+ * 1.在AbstractMvpActivity中，绑定View，解绑View这些方法，如果现在再创建一个AbstractMvpFragment或者
+ * AbstractMvpView、或者是一个AbstractMvpXXX等，那么这些代码全部都要再写一遍，代码冗余，可以抽出去
+ * <p>
+ * 2.实现AbstractMvpActivity的实现类中创建Presenter的方法，每个实现类都要写new，这一步父类完全可以帮忙解决
+ *
+ * <p>
+ * 3.如果Activity或者Fragment或者View等V层意外销毁，那么我们的Presenter也没有必要存在了，界面都没有了还
+ * 要这个有什么用，但是如果又被重启
+ * 那么我们还需要再恢复Presenter，也就是说让我们的Presenter和View的生命周期同步，这样才算完美
+ * <p>
+ * 4.创建Presenter的动作放到使用时再创建，可以稍微优化一下性能问题
+ * <p>
  * 解决问题：
- * 我们可以将他们抽到基类中
+ * 1.使用代理模式将绑定和解绑view的操作抽离出来
+ * 定义绑定解绑
+ * <p>
+ * 2.使用工厂模式和注解在上层统一创建Presenter
+ * <p>
+ * 3.序列化保存Presenter，销毁Presenter对象，如果View重建反序列化重新获取Presenter
+ * <p>
+ * 4.将Presenter的创建过程放入到获取Presenter的方法中，如果存在返回，不存在创建，保证Presenter不会为空
+ * ，而且这样还可以保证在使用的时候再创建，节省内存资源
  */
-
-public class MyRecyclerViewActivity extends AbstractBaseActivity<MvpRecyVView3,MvpPresenter3> implements MvpRecyVView3 {
-    private Button button;
-
+@CreatePresenter(RequestPresenter4.class)
+public class MyRecyclerViewActivity extends AbstractMvpAppCompatActivity<RequestView4, RequestPresenter4> implements  RequestView4 {
+    Button demo_button;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,42 +260,28 @@ public class MyRecyclerViewActivity extends AbstractBaseActivity<MvpRecyVView3,M
         initView();
     }
 
-    @Override
-    protected MvpPresenter3 creatPresenter() {
-        return new MvpPresenter3();
-    }
-
     private void initView() {
-        button = findViewById(R.id.demo_button);
-        button.setText("开始请求");
-        button.setOnClickListener(new View.OnClickListener() {
+        demo_button = findViewById(R.id.demo_button);
+        demo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                getMvpPresenter().clickRequest("101010100");
             }
         });
     }
 
-    private void initData() {
-        getPresenter().getDatas("101010100");
-    }
-
     @Override
     public void requestLoading() {
-        button.setText("请求中,请稍后...");
+        demo_button.setText("请求数据中，，，，，");
     }
 
     @Override
-    public void requestSuccess(com.example.myapplication.MvpDemo.MvpDemo2.request.WeatherBean data) {
-        String str = new Gson().toJson(data);
-        Log.i("ls","data----"+str);
-        button.setText(str);
+    public void resultSuccess(WeatherBean result) {
+        demo_button.setText(""+new Gson().toJson(result));
     }
 
     @Override
-    public void requestFailure(String error) {
-        Log.i("ls","error----"+error);
+    public void resultFailure(String result) {
+        demo_button.setText(result);
     }
-
 }
-
