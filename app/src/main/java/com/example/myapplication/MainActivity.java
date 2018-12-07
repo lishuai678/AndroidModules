@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.myapplication.MvpDemo.MyRecyclerViewActivity;
+import com.example.myapplication.Project.HomePackage.HomeActivity;
+
 public class MainActivity extends AppCompatActivity {
     private Button gongxiang;
 
@@ -27,5 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void  zonghe(View view){
+        Toast.makeText(MainActivity.this,"zonghe",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 }
