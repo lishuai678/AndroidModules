@@ -22,5 +22,5 @@ public interface ApiServices {
 
     //使用rxJava   +    retrofit
     @POST("backadmin/resourceDetailAppApi/findAllResourceInfoAndResourceDetail")
-    Observable<HomeBean> getHomeDataByRx(RequestBody requestBody);
+    Observable<HomeBean> getHomeDataByRx(@Body RequestBody requestBody);
 }

@@ -30,7 +30,6 @@ public class HomeActivity extends AbstractBaseActivity<HomeMvpView,HomePresenter
 
     private void initData() {
 //        getPresenter().requestBanner();
-
         getPresenter().loadDataByRxandroidRetrofit();
     }
 
