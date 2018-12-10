@@ -1,4 +1,4 @@
-package com.example.myapplication.Project.HomePackage.bean;
+package com.example.myapplication.Project.HomePackage.homeFragmentPak.bean;
 
 import java.util.List;
 

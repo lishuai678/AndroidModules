@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication.MvpDemo.MyRecyclerViewActivity;
-import com.example.myapplication.Project.HomePackage.HomeActivity;
+import com.example.myapplication.Project.HomePackage.homeFragmentPak.HomeFragment;
+import com.example.myapplication.Project.HomePackage.homeactivityPak.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
     private Button gongxiang;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public void  zonghe(View view){
         Toast.makeText(MainActivity.this,"zonghe",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this, HomeActivity.class);
+        intent.setClass(MainActivity.this, HomeActivity
+                .class);
         startActivity(intent);
     }
 }

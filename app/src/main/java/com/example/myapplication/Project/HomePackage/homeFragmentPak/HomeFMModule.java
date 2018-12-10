@@ -1,11 +1,7 @@
-package com.example.myapplication.Project.HomePackage;
+package com.example.myapplication.Project.HomePackage.homeFragmentPak;
 
-import com.example.myapplication.MvpDemo.MvpDemo2.request.WeatherBean;
-import com.example.myapplication.MvpDemo.MvpDemo3.request.ApiService3;
 import com.example.myapplication.Project.BasePackage.request.ApiServices;
-import com.example.myapplication.Project.HomePackage.bean.HomeBean;
-
-import org.json.JSONObject;
+import com.example.myapplication.Project.HomePackage.homeFragmentPak.bean.HomeBean;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -18,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by admin on 2018/12/7.
  */
 
-public class HomeModule {
+public class HomeFMModule {
     static  MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String BASE_URL = "http://58.87.91.65:9565/";
     private Call<HomeBean> homeBeanCall;

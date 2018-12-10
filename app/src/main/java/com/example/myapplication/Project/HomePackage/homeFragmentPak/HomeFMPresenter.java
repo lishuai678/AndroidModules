@@ -1,18 +1,16 @@
-package com.example.myapplication.Project.HomePackage;
+package com.example.myapplication.Project.HomePackage.homeFragmentPak;
 
 import android.util.Log;
 
 import com.example.myapplication.Project.BasePackage.AbstractBasePersent;
 import com.example.myapplication.Project.BasePackage.request.ApiServices;
 import com.example.myapplication.Project.BasePackage.request.RetrofitManager;
-import com.example.myapplication.Project.HomePackage.bean.HomeBean;
+import com.example.myapplication.Project.HomePackage.homeFragmentPak.bean.HomeBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.reactivestreams.Subscriber;
 
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -26,12 +24,12 @@ import retrofit2.Response;
  * Created by admin on 2018/12/6.
  */
 
-public class HomePresenter extends AbstractBasePersent<HomeMvpView> {
-    private HomeModule homeModule;
+public class HomeFMPresenter extends AbstractBasePersent<HomeFMMvpView> {
+    private HomeFMModule homeModule;
     HomeBean mhomeBean;
 
-    public HomePresenter() {
-        this.homeModule = new HomeModule();
+    public HomeFMPresenter() {
+        this.homeModule = new HomeFMModule();
     }
 
     public void requestBanner(){
@@ -84,7 +82,7 @@ public class HomePresenter extends AbstractBasePersent<HomeMvpView> {
         Log.e("ls","99999999999999----"+str);
         final String finalStr = str;
         RetrofitManager.getRetrofit().create(ApiServices.class)
-                .getHomeDataByRx(RequestBody.create(HomeModule.JSON,finalStr))
+                .getHomeDataByRx(RequestBody.create(HomeFMModule.JSON,finalStr))
                 //在子线程访问数据
                 .subscribeOn(Schedulers.io())
                 //在主线程显示数据

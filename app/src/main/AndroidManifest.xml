@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MvpDemo.MyRecyclerViewActivity"></activity>
-        <activity android:name=".Project.HomePackage.HomeActivity"></activity>
+        <activity android:name=".Project.HomePackage.homeactivityPak.HomeActivity"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,6 @@
 package com.example.myapplication.Project.BasePackage.request;
 
-import com.example.myapplication.Project.HomePackage.bean.HomeBean;
-
-import org.json.JSONObject;
+import com.example.myapplication.Project.HomePackage.homeFragmentPak.bean.HomeBean;
 
 
 import io.reactivex.Observable;
